@@ -1,0 +1,14 @@
+FROM ubuntu:12.04
+
+MAINTAINER Pasha Bayat "pasha_bayat@yahoo.com"
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV APACHE_RUN_USER                      www-data
+ENV APACHE_RUN_GROUP                     www-data
+ENV APACHE_LOG_DIR                       /var/log/apache2
+
+Expose 80
+#RUN echo "ServerName localhost" | tee /etc/apache2/conf.d/fqdn
+COPY newindex.html /var/www/index.html
+CMD ["apache2", "-D", "FOREGROUND"]
